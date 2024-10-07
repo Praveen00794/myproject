@@ -1,0 +1,73 @@
+﻿@model Newform.Models.Employeeinfo
+@{
+    ViewBag.Title = "Insertpage";
+
+}
+
+<h2 class="text-center">Add New Employee</h2>
+<div class="breadcrumb">
+    <a href="@Url.Action("EmpHome","Home")">Home</a>
+    <span> &gt; </span> <!-- This is a separator -->
+    <a>Add New Employee</a>
+</div>
+@using (Html.BeginForm("Insertpage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="form-group">
+    @Html.HiddenFor(m => m.EmployeeId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone)
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.DateOfBirth)
+        @Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @id = "dateOfBirth", @placeholder = "dd-mm-yyyy" })
+        <span id="dateError" style="color: red; display: none;">Please select a future date.</span>
+
+
+        @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Department</label>
+        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departmentmaster, "DepId", "DepName"), "Select Department", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+        @Html.LabelFor(m => m.IsActive, "Is Active", new { @class = "form-check-label" })
+    </div>
+    <div class="form-group">
+        <label>Resume Upload</label>
+
+        <input type="file" name="resumeFile" data-toggle="tooltip" title="Upload your resume in PDF or DOC format" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+   
+
+
+
+
+
+
+
+    <a href="@Url.Action("EmpHome", "Home")" class="btn btn-success">View All Employee</a>
+
+    
+</div>
+}

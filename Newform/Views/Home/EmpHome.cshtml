@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "EmpHome";
+    var employees = ViewBag.Grd as IEnumerable<Newform.Models.Employeeinfo>;
+}
+
+<h2 class="text-center">Emloyee Details</h2>
+<div class="breadcrumb">
+    <a>Home</a>
+</div>
+<a class="btn btn-primary" href="@Url.Action("Insertpage", "Home")">Add New Employee</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+
+            <th>Date of Birth</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (employees != null && employees.Any())
+        {
+            foreach (var employee in employees)
+            {
+                <tr>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.Email</td>
+
+                    <td>@employee.DateOfBirth.ToString("dd-MM-yyyy")</td>
+                    <td>@employee.DepartmentName</td>
+
+                    <td>@(employee.IsActive == true ? "Active" : "Inactive")</td>
+                    <td>
+                        <a class="btn btn-warning" href="@Url.Action("Editemployee", "Home", new { id = employee.EmployeeId })">Edit</a>
+                        |
+                        <button class="del-btn btn btn-danger" data-id="@employee.EmployeeId">Delete</button>
+                        @*<a href="@Url.Action("Delete", "Employee", new { id = employee.EmployeeId })">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td align="center">
+                    No Datas
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this employee?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" id="confirm-btn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
